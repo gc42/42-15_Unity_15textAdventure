@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Room navigation script. Holds a reference to the current room and loads and unloads rooms as we move between them.
+/// </summary>
 public class RoomNavigationScript : MonoBehaviour
 {
 	public RoomScript currentRoom;

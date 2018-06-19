@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Game controller script. Manage all the sub-systems of the game and the actionLog,
+/// a list of strings which contains everything that has happened so far.
+/// </summary>
 public class GameControllerScript : MonoBehaviour
 {
 	
@@ -12,12 +16,17 @@ public class GameControllerScript : MonoBehaviour
 
 	[HideInInspector] public RoomNavigationScript roomNav;
 	[HideInInspector] public List<string> interactionDescriptionsInRoom = new List<string>();
+	[HideInInspector] public InteractableItemsScript interactableItems;
 
 	List<string> actionLog = new List<string>();
 
+
+
 	private void Awake()
 	{
+		interactableItems = GetComponent<InteractableItemsScript>();
 		roomNav = GetComponent<RoomNavigationScript>();
+
 	}
 
 
@@ -31,7 +40,6 @@ public class GameControllerScript : MonoBehaviour
 	public void DisplayLoggedText()
 	{
 		string logAsText = string.Join("\n", actionLog.ToArray());
-
 		displayText.text = logAsText;
 	}
 
@@ -60,6 +68,52 @@ public class GameControllerScript : MonoBehaviour
 	private void UnpackRoom()
 	{
 		roomNav.UnpackExistsInRoom();
+		PrepareObjectsToTakeOrExamine(roomNav.currentRoom);
+	}
+
+	/// <summary>
+	/// Prepares the objects to take or examine. 
+	/// </summary>
+	/// <param name="currentRoom">Current room.</param>
+	void PrepareObjectsToTakeOrExamine(RoomScript currentRoom)
+	{
+		for (int i = 0; i < currentRoom.interactableObjectsInRoom.Length; i++)
+		{
+			string descriptNotInInventory = interactableItems.GetObjectsNotInInventory(currentRoom, i);
+			if (descriptNotInInventory != null)
+			{
+				interactionDescriptionsInRoom.Add(descriptNotInInventory);
+			}
+
+			InteractableObjectScript interactableInRoom = currentRoom.interactableObjectsInRoom[i];
+
+			for (int j = 0; j < interactableInRoom.interactions.Length; j++)
+			{
+				InteractionScript interaction = interactableInRoom.interactions[j];
+				if (interaction.inputAction.keyWord == "examine")
+				{
+					interactableItems.examineDictionary.Add(interactableInRoom.noun, interaction.textResponse);
+				}
+
+				if (interaction.inputAction.keyWord == "take")
+				{
+					interactableItems.takeDictionary.Add(interactableInRoom.noun, interaction.textResponse);
+				}
+
+			}
+
+		}
+	}
+
+
+	public string TestVerbDictionaryWithNoun(Dictionary<string, string> verbDictionary, string verb, string noun)
+	{
+		if (verbDictionary.ContainsKey(noun))
+		{
+			return verbDictionary[noun];
+		}
+
+		return "You can't " + verb + " " + noun;
 	}
 
 
@@ -68,6 +122,7 @@ public class GameControllerScript : MonoBehaviour
 	/// </summary>
 	private void ClearCollectionsForNewRoom()
 	{
+		interactableItems.ClearCollections();
 		interactionDescriptionsInRoom.Clear();
 		roomNav.ClearExits();
 	}

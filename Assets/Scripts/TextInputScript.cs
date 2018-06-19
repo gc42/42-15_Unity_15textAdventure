@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Text input script. Takes input from the player, displays it and call InputActions
+/// </summary>
 public class TextInputScript : MonoBehaviour
 {
 
