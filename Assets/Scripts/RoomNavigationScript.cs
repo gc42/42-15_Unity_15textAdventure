@@ -5,54 +5,58 @@ using UnityEngine;
 public class RoomNavigationScript : MonoBehaviour
 {
 	public RoomScript currentRoom;
+
 	GameControllerScript gameController;
 
-	Dictionary<string, Room> exitDictionary = new Dictionary<string, Room>(); // TODO:
+	Dictionary<string, RoomScript> exitDictionary = new Dictionary<string, RoomScript>();
+
+
+
 
 	private void Awake()
 	{
 		gameController = GetComponent<GameControllerScript>();
 	}
 
+
+
+
 	public void UnpackExistsInRoom()
 	{
 		for (int i = 0; i < currentRoom.exits.Length; i++)
 		{
 			exitDictionary.Add(currentRoom.exits[i].keyString, currentRoom.exits[i].valueRoom);
-			gameController.interactionDescriptionInRoom.Add(currentRoom.exits[i].exitDescription);
+			gameController.interactionDescriptionsInRoom.Add(currentRoom.exits[i].exitDescription);
+
 		}
 	}
 
-
-	public void AttemptToChangeRooms(string directionNoun)
+	/// <summary>
+	/// Player attempt (tentative) to go to an other room
+	/// </summary>
+	/// <param name="directionName">Direction name.</param>
+	public void AttemptToChangeRooms(string directionName)
 	{
-		if (exitDictionary.ContainsKey(directionNoun))
+		// 
+		if (exitDictionary.ContainsKey(directionName))
 		{
-			currentRoom = exitDictionary[directionNoun];
-			gameController.LogStringWithReturn("You head off to the " + directionNoun);
+			currentRoom = exitDictionary[directionName];
+			gameController.LogStringWithReturn("You head off to the " + directionName);
 			gameController.DisplayRoomText();
 		}
 		else
 		{
-			gameController.LogStringWithReturn("There is no path to the " + directionNoun);
+			gameController.LogStringWithReturn("There is no path to the " + directionName);
 		}
 	}
 
+	/// <summary>
+	/// Delete all entries of the dictionary. Dictionary is empty for new uses.
+	/// </summary>
 	public void ClearExits()
 	{
 		exitDictionary.Clear();
 	}
 
 
-
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

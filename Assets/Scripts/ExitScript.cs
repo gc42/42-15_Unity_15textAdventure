@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ExitScript {
-
+public class ExitScript
+{
 	public string keyString;
 	public string exitDescription;
 	public RoomScript valueRoom;

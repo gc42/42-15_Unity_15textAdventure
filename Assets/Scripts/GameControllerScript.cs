@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class GameControllerScript : MonoBehaviour
 {
+	
 	public Text displayText;
 	public InputActionScript[] inputActions;
+
 
 	[HideInInspector] public RoomNavigationScript roomNav;
 	[HideInInspector] public List<string> interactionDescriptionsInRoom = new List<string>();
@@ -19,10 +21,6 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 
-
-
-
-	// Use this for initialization
 	void Start ()
 	{
 		DisplayRoomText();
@@ -41,32 +39,44 @@ public class GameControllerScript : MonoBehaviour
 
 	public void DisplayRoomText()
 	{
+		// Effacement des anciens logs
 		ClearCollectionsForNewRoom();
 
+		// Preparation de la nouvelle room
 		UnpackRoom();
 
-		string joinedInteractionDescription = string.Join("\n", interactionDescriptionsInRoom.ToArray());
+		// Concatenation de toutes les interactions du player et des descriptions de la room
+		string joinedInteractionDescriptions = string.Join("\n", interactionDescriptionsInRoom.ToArray());
+		string combinedText                  = roomNav.currentRoom.description + "\n" + joinedInteractionDescriptions;
 
-		string combinedText = roomNav.currentRoom.description + "\n" + joinedInteractionDescription;
-
+		// Affichage de tout le texte
 		LogStringWithReturn(combinedText);
 	}
+	 
 
-
-
-	void UnpackRoom()
+	/// <summary>
+	/// Unpacks the room. Preparation de la nouvelle room
+	/// </summary>
+	private void UnpackRoom()
 	{
-		roomNav.UnpackExistInRoom();
+		roomNav.UnpackExistsInRoom();
 	}
 
 
-
-	void ClearCollectionsForNewRoom()
+	/// <summary>
+	/// Clears the collections for new room. Nettoyage des textes lors d'un changement de room
+	/// </summary>
+	private void ClearCollectionsForNewRoom()
 	{
 		interactionDescriptionsInRoom.Clear();
 		roomNav.ClearExits();
 	}
 
+
+	/// <summary>
+	/// Logs the string with return. Ajoute du texte au log, puis l'affiche 
+	/// </summary>
+	/// <param name="stringToAdd">String to add.</param>
 	public void LogStringWithReturn(string stringToAdd)
 	{
 		actionLog.Add(stringToAdd + "\n");
