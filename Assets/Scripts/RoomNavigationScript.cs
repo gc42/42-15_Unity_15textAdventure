@@ -69,14 +69,17 @@ public class RoomNavigationScript : MonoBehaviour
 	public void DisplayHelp()
 	{
 		gameController.LogStringWithReturn(
-			"Pour jouer, taper les commandes suivantes\n" +
+			"Pour jouer, taper les commandes suivantes,\n" +
 			"- <color=red>go direction</color> pour se deplacer,\n" +
-			"- <color=red>examine objectname</color> pour avoir des informations sur les objets\n" +
-			"- <color=red>take objectname</color> pour ramasser l'objet\n" +
-			"- <color=red>use objectname</color> pour se servir de l'objet\n" +
-			"- <color=red>inventory</color> pour lister les objets ramasses\n" +
-			"- <color=red>where</color> pour savoir dans quelle 'room' on se trouve\n" +
-			"- <color=red>help</color> to display this tips.");
+			"- <color=red>examine objectname</color> pour avoir des informations sur les objets,\n" +
+			"- <color=red>take objectname</color> pour ramasser l'objet,\n" +
+			"- <color=red>use objectname</color> pour se servir de l'objet,\n" +
+			"- <color=red>inventory</color> pour lister les objets ramasses,\n" +
+			"- <color=red>where</color> pour savoir dans quelle 'room' on se trouve,\n" +
+			"- <color=red>help</color> to display this tips," +
+			"- <color=red>quit</color> to exit the game and close the window.");
 	}
+
+
 
 }

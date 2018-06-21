@@ -12,6 +12,7 @@ public class GameControllerScript : MonoBehaviour
 	
 	public Text                                      displayText;
 	public InputActionScript[]                       inputActions;
+	private bool                                     quitTheGame = false;
 
 	private List<string>                             actionLog = new List<string>();
 
@@ -99,7 +100,6 @@ public class GameControllerScript : MonoBehaviour
 				{
 					interactableItems.takeDictionary.Add(interactableInRoom.noun, interaction.textResponse);
 				}
-
 			}
 
 		}
@@ -138,6 +138,32 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 
+	public void QuitTheGame()
+	{
+		LogStringWithReturn("Are you ready to quit the game now ? (y/n)");
+		quitTheGame = true;
+	}
+
+	private void Update()
+	{
+		
+		if (quitTheGame == true)
+		{
+			if (Input.GetKeyDown(KeyCode.Y))
+			{
+
+				LogStringWithReturn("See you later, aligator ;-)");
+				LogStringWithReturn("...");
+				LogStringWithReturn("...");
+				Application.Quit();
+			}
+			else if (Input.GetKeyDown(KeyCode.N))
+			{
+				LogStringWithReturn("Continue playing");
+				quitTheGame = false;
+			}
+		}
+	}
 
 
 
