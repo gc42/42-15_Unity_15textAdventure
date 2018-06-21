@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class InteractionScript
 {
-	public InputActionScript inputAction;
+	public InputActionScript    inputAction;
 	[TextArea]
-	public string textResponse;
+	public string               textResponse;
 	public ActionResponseScript actionResponse;
 }

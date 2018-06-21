@@ -10,22 +10,22 @@ using UnityEngine.UI;
 public class GameControllerScript : MonoBehaviour
 {
 	
-	public Text displayText;
-	public InputActionScript[] inputActions;
+	public Text                                      displayText;
+	public InputActionScript[]                       inputActions;
 
+	private List<string>                             actionLog = new List<string>();
 
-	[HideInInspector] public RoomNavigationScript roomNav;
-	[HideInInspector] public List<string> interactionDescriptionsInRoom = new List<string>();
+	[HideInInspector] public RoomNavigationScript    roomNav;
+	[HideInInspector] public List<string>            interactionDescriptionsInRoom = new List<string>();
 	[HideInInspector] public InteractableItemsScript interactableItems;
 
-	List<string> actionLog = new List<string>();
 
 
 
 	private void Awake()
 	{
 		interactableItems = GetComponent<InteractableItemsScript>();
-		roomNav = GetComponent<RoomNavigationScript>();
+		roomNav           = GetComponent<RoomNavigationScript>();
 
 	}
 
@@ -67,7 +67,7 @@ public class GameControllerScript : MonoBehaviour
 	/// </summary>
 	private void UnpackRoom()
 	{
-		roomNav.UnpackExistsInRoom();
+		roomNav.UnpackExitsInRoom();
 		PrepareObjectsToTakeOrExamine(roomNav.currentRoom);
 	}
 
@@ -129,7 +129,7 @@ public class GameControllerScript : MonoBehaviour
 
 
 	/// <summary>
-	/// Logs the string with return. Ajoute du texte au log, puis l'affiche 
+	/// Logs the string with return. Ajoute du texte au log
 	/// </summary>
 	/// <param name="stringToAdd">String to add.</param>
 	public void LogStringWithReturn(string stringToAdd)

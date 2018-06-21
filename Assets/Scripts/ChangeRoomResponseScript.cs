@@ -7,7 +7,6 @@ public class ChangeRoomResponseScript : ActionResponseScript
 {
 	public RoomScript roomToChangeTo;
 
-
 	public override bool DoActionResponse(GameControllerScript gameController)
 	{
 		if (gameController.roomNav.currentRoom.roomName == requiredString)

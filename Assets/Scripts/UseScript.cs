@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "TextAdventure/InputActions/Use")]
-public class Use : InputActionScript
+public class UseScript : InputActionScript
 {
 	public override void RespondToInput(GameControllerScript gameController, string[] separatedInputWords)
 	{

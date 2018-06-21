@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class InteractableItemsScript : MonoBehaviour
 {
-	public List<InteractableObjectScript> usableItemList;
+	public List<InteractableObjectScript>              usableItemList;
 
 	// NOTA:  Dictionaries cannot be displayed in the Inspector, because they are non ordered lists
-	public Dictionary<string, string> examineDictionary = new Dictionary<string, string>();
-	public Dictionary<string, string> takeDictionary    = new Dictionary<string, string>();
-	[HideInInspector] public List<string> nounsInRoom = new List<string>();
-	private Dictionary<string, ActionResponseScript> useDictionary = new Dictionary<string, ActionResponseScript>(); //
-	public List<string> nounsInInventory = new List<string>();
-	private GameControllerScript gameController;
+	public Dictionary<string, string>                  examineDictionary = new Dictionary<string, string>();
+	public Dictionary<string, string>                  takeDictionary    = new Dictionary<string, string>();
+	[HideInInspector] public List<string>              nounsInRoom       = new List<string>();
+	private Dictionary<string, ActionResponseScript>   useDictionary     = new Dictionary<string, ActionResponseScript>();
+	public List<string>                                nounsInInventory  = new List<string>();
+	private GameControllerScript                       gameController;
 
 
 	public string GetObjectsNotInInventory(RoomScript currentRoom, int i)
@@ -59,7 +59,7 @@ public class InteractableItemsScript : MonoBehaviour
 				{
 					useDictionary.Add(noun, interaction.actionResponse);
 				}
-			}
+			} 
 
 
 		} 
@@ -102,6 +102,12 @@ public class InteractableItemsScript : MonoBehaviour
 		nounsInRoom.Clear();
 	}
 
+
+	/// <summary>
+	/// Take the specified separatedInputWords.
+	/// </summary>
+	/// <returns>The take.</returns>
+	/// <param name="separatedInputWords">Separated input words.</param>
 	public Dictionary<string, string> Take(string[] separatedInputWords)
 	{
 		string noun = separatedInputWords[1];
@@ -109,8 +115,8 @@ public class InteractableItemsScript : MonoBehaviour
 		if (nounsInRoom.Contains(noun))
 		{
 			nounsInInventory.Add(noun);
-			nounsInRoom.Remove(noun);
 			AddActionResponsesToUseDictionary();
+			nounsInRoom.Remove(noun);
 			return takeDictionary;
 		}
 		else
